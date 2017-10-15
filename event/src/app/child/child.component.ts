@@ -16,4 +16,8 @@ export class ChildComponent implements OnInit {
   ngOnInit() {
   }
 
+  output(msg: string) {
+  	console.log(msg);
+  }
+
 }

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 
 import { PriceQuote } from '../price-quote/price-quote.component';
+import { ChildComponent } from '../child/child.component';
 
 @Component({
   selector: 'app-bind',
@@ -55,7 +56,12 @@ export class BindComponent implements OnInit {
     .subscribe(search => this.outputSearch(search));
   }
 
+  // 可以通过ViewChild来获得子组件的引用
+  @ViewChild("child")
+  child: ChildComponent;
+
   ngOnInit() {
+    this.child.output('我是在父组件中调用的子组件的方法');
   }
 
   doOnClick(event: any) {
@@ -99,5 +105,6 @@ export class BindComponent implements OnInit {
   buyHandler(e: PriceQuote) {
     this.buyPrice = e;
   }
+
 
 }

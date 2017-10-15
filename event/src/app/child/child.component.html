@@ -3,3 +3,10 @@
 	  我是child子组件，这是从父组件通过注入属性传来的购买价格： {{buyPrice.price | number:'2.2-2'}}
 	</p>
 </div>
+
+<div>
+	<!-- 通过ng-content可以将父组件中的html片段投影到子组件中，通过class灵活地安排每个片段的位置 -->
+	<ng-content select=".header"></ng-content>
+	<div>我是子组件的div</div>
+	<ng-content select=".footer"></ng-content>
+</div>

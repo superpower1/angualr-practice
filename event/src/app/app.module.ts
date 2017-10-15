@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from "@angular/router";
 
 import { AppComponent } from './app.component';
 import { BindComponent } from './bind/bind.component';
@@ -8,6 +9,11 @@ import { MultiplePipe } from './pipe/multiple.pipe';
 import { ChildComponent } from './child/child.component';
 import { PriceQuoteComponent } from './price-quote/price-quote.component';
 import { HookComponent } from './hook/hook.component';
+
+var routeConfig: Routes = [
+  {path: '', component: BindComponent},
+  {path: 'hook', component: HookComponent}
+]
 
 @NgModule({
   declarations: [
@@ -21,7 +27,8 @@ import { HookComponent } from './hook/hook.component';
   imports: [
     BrowserModule,  
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule.forRoot(routeConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]

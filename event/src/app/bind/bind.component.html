@@ -1,3 +1,5 @@
+<h1>Bind Component</h1>
+
 <button (click)="doOnClick($event)">Click</button>
 
 <!-- 这两种方法是一样的 -->
@@ -42,4 +44,9 @@
 </div>
 
 <!-- 通过注入属性可以将数据传给子组件，[]中的属性需要在子组件通过@Input()定义 -->
-<app-child [buyPrice]="buyPrice"></app-child>
+<app-child [buyPrice]="buyPrice" #child>	
+	<div class="header">我是父组件投影到子组件上header</div>
+	<div class="footer">我是父组件投影到子组件上footer</div>
+</app-child>
+
+
