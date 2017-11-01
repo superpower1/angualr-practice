@@ -18,10 +18,21 @@
 
 <form [formGroup]="newForm" (submit)="onSubmit()">
 	<div>Alias: <input formControlName="alias" type="text"></div>
+	<!-- newForm.hasError('校验器名字','校验字段名')，这里的校验器名字是校验器返回的key，如果校验通过则不会返回 -->
+	<div [hidden]="!newForm.hasError('minlength','alias')">
+		Invalid Alias (Alias should be at least 6 digits)
+	</div>
 	<div>Age: <input formControlName="age" type="number"></div>
 	<div formGroupName="pwdGroup">
 		<div>Password: <input formControlName="pwd" type="password"></div>
+		<!-- 因为pwd不是一级字段名，所以第二个参数需要使用数组将一级字段pwdGroup写入 -->
+		<div [hidden]="!newForm.hasError('minlength', ['pwdGroup', 'pwd'])">
+			Password must be at least 6 digits
+		</div>
 		<div>Password Confirm: <input formControlName="pwdConfirm" type="password"></div>
+		<div [hidden]="!newForm.hasError('pwdEqual','pwdGroup')">
+			Different password detected
+		</div>
 	</div>
 	<button type="submit">Submit</button>
 </form>

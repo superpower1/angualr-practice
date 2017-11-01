@@ -1,5 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormGroupName, FormArray, FormArrayName, FormBuilder } from '@angular/forms';
+import { 
+  FormControl, 
+  FormGroup, 
+  FormGroupName, 
+  FormArray, 
+  FormArrayName, 
+  FormBuilder,
+  Validators,
+  AbstractControl
+} from '@angular/forms';
 
 @Component({
   selector: 'app-reactive-form',
@@ -7,6 +16,23 @@ import { FormControl, FormGroup, FormGroupName, FormArray, FormArrayName, FormBu
   styleUrls: ['./reactive-form.component.css']
 })
 export class ReactiveFormComponent implements OnInit {
+
+  // 自定义校验器
+  ageValidator(control: FormControl): any {
+    let valid:boolean = false;
+    if(control.value>=0 && control.value<=200){
+      valid = true;
+    }
+    // 如果校验通过则返回null，否则返回错误信息
+    return valid ? null : {age : true};
+  }
+
+  pwdValidator(group: FormGroup): any {
+    let pwd:FormControl = group.get("pwd") as FormControl;
+    let pwdConfirm:FormControl = group.get("pwdConfirm") as FormControl;
+    let valid:boolean = (pwd.value === pwdConfirm.value);
+    return valid ? null : {pwdEqual:true};
+  }
 
 	formModel: FormGroup = new FormGroup({
 		dateRange: new FormGroup({
@@ -24,12 +50,14 @@ export class ReactiveFormComponent implements OnInit {
 	// 使用FormBuilder也可以实现fb.group和fb.array节省代码
   constructor(fb: FormBuilder) {
   	this.newForm = fb.group({
-  		alias: [''],
-  		age: [''],
+      // 第二个参数是校验器，Validator是angular预定义的校验器
+  		alias: ['', [Validators.required, Validators.minLength(6)]],
+  		age: ['', this.ageValidator],
+      // group的校验器写法
   		pwdGroup: fb.group({
-  			pwd: [''],
+  			pwd: ['', Validators.minLength(6)],
   			pwdConfirm: ['']
-  		})
+  		}, {validator: this.pwdValidator})
 
   	});
   }
@@ -47,6 +75,9 @@ export class ReactiveFormComponent implements OnInit {
   }
 
   onSubmit() {
+    if(this.newForm.valid){
+      console.log('valid');
+    }
   	console.log(this.newForm.value);
   }
 
