@@ -1,0 +1,28 @@
+<form [formGroup]="formModel" (submit)="onSave()">
+	<div formGroupName="dateRange">
+		From: <input type="date" formControlName="from">
+		To: <input type="date" formControlName="to">
+	</div>
+	<div>
+		<ul formArrayName="emails">
+			<li *ngFor="let e of this.formModel.get('emails').controls; let i=index;">
+				<input type="text" [formControlName]="i">
+			</li>
+		</ul>
+		<button (click)="addEmail()">Add Email</button>
+	</div>
+	<div>
+		<button type="submit">Save</button>
+	</div>
+</form>
+
+<form [formGroup]="newForm" (submit)="onSubmit()">
+	<div>Alias: <input formControlName="alias" type="text"></div>
+	<div>Age: <input formControlName="age" type="number"></div>
+	<div formGroupName="pwdGroup">
+		<div>Password: <input formControlName="pwd" type="password"></div>
+		<div>Password Confirm: <input formControlName="pwdConfirm" type="password"></div>
+	</div>
+	<button type="submit">Submit</button>
+</form>
+
