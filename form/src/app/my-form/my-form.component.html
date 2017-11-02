@@ -1,6 +1,20 @@
-<form #myForm="ngForm" (ngSubmit)="onSubmit(myForm.value)">
-	<div>User name: <input ngModel name="username" type="text"></div>
-	<div>Phone number: <input ngModel name="mobile" type="number"></div>
+<!-- 这里用novalidate禁用html自带的表单校验功能以免和angular的表单校验冲突 -->
+<form #myForm="ngForm" (ngSubmit)="onSubmit(myForm.value, myForm.valid)" novalidate>
+	<!-- 这里的required和minlength是angular自带的校验指令 -->
+	<div>User name: <input ngModel required minlength="3" name="username" type="text" (input)="onUsernameInput(myForm)"></div>
+	<div [hidden]="usernameValid || usernameUntouched">
+		<div [hidden]="!myForm.form.hasError('required','username')">
+			Username is required
+		</div>
+		<div [hidden]="!myForm.form.hasError('minlength','username')">
+			Username too short (Must be at least 6 digits)
+		</div>
+	</div>
+	<!-- mobileValidator是自定义的校验指令 -->
+	<div>Phone number: <input ngModel mobileValidator name="mobile" type="number" (input)="onMobileInput(myForm)"></div>
+	<div [hidden]="!myForm.form.hasError('mobileValidator','mobile')">
+		Invalid mobile number
+	</div>
 	<div ngModelGroup="pwdGroup">
 		<div>Password: <input ngModel name="pwd" type="password"></div>
 		<div>Password Confirm: <input ngModel name="pwdConfirm" type="password"></div>

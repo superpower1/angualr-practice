@@ -17,7 +17,9 @@
 </form>
 
 <form [formGroup]="newForm" (submit)="onSubmit()">
-	<div>Alias: <input formControlName="alias" type="text"></div>
+	<!-- touched,untouched表示用户是否碰过
+	pristine,dirty表示用户是否有输入 -->
+	<div>Alias: <input [class.hasError]="newForm.get('alias').invalid && newForm.get('alias').touched" formControlName="alias" type="text"></div>
 	<!-- newForm.hasError('校验器名字','校验字段名')，这里的校验器名字是校验器返回的key，如果校验通过则不会返回 -->
 	<div [hidden]="!newForm.hasError('minlength','alias')">
 		Invalid Alias (Alias should be at least 6 digits)
