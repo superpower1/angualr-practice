@@ -4,7 +4,7 @@ import { NG_VALIDATORS } from "@angular/forms"
 
 // 指令Directive与组件component的区别只是没有html模板
 @Directive({
-  selector: '[appMobileValidator]',
+  selector: '[mobile]',
   providers: [{provide: NG_VALIDATORS, useValue: mobileValidator, multi:true}]
 })
 export class MobileValidatorDirective {

@@ -4,5 +4,6 @@ import { Observable } from "rxjs";
 export function mobileValidator(control: FormControl) : any {
 	var mobileReg = /^04[0-9]{8}$/;
 	let valid = mobileReg.test(control.value);
+	console.log(valid);
 	return valid ? null : {mobile:true};
 }

@@ -14,22 +14,18 @@ export class MyFormComponent implements OnInit {
   }
 
   usernameValid:boolean = true;
-  usernameUntouched:boolean = true;
 
   mobileValid:boolean = true;
-  mobileUntouched:boolean = true;
 
-	onUsernameInput(form: NgForm) {
-	  	if (form) {
-	  		this.usernameValid = form.form.get("required").valid;
-	  		this.mobileUntouched = form.form.get("minlength").untouched;
+	onUsernameInput(myform: NgForm) {
+	  	if (myform) {
+	  		this.usernameValid = myform.form.get("username").valid;
 	  	}
 	}
 
-  onMobileInput(form: NgForm) {
-  	if (form) {
-  		this.mobileValid = form.form.get("mobileValidator").valid;
-  		this.mobileUntouched = form.form.get("mobileValidator").untouched;
+  onMobileInput(myform: NgForm) {
+  	if (myform) {
+  		this.mobileValid = myform.form.get("mobile").valid;
   	}
   }
 
