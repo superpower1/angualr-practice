@@ -1,4 +1,5 @@
 import * as express from 'express';
+import { Server } from 'ws';
 
 const app = express();
 
@@ -41,3 +42,19 @@ app.get('/api/product/:id', (req, res) => {
 const server = app.listen(8000, 'localhost', ()=> {
   console.log('Server is listening on localhost:8000');
 });
+
+const wsServer = new Server({port: 8085});
+wsServer.on("connection", websocket => {
+	websocket.send('Connection established');
+	websocket.on("message", msg => {
+		console.log("Recieved message:"+msg);
+	});
+});
+
+setInterval(() => {
+	if(wsServer.clients) {
+		wsServer.clients.forEach(client => {
+			client.send("Hello");
+		})
+	}
+}, 2000);

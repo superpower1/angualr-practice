@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
+var ws_1 = require("ws");
 var app = express();
 var Product = (function () {
     function Product(id, title, price, rating, desc, cate) {
@@ -34,3 +35,17 @@ app.get('/api/product/:id', function (req, res) {
 var server = app.listen(8000, 'localhost', function () {
     console.log('Server is listening on localhost:8000');
 });
+var wsServer = new ws_1.Server({ port: 8085 });
+wsServer.on("connection", function (websocket) {
+    websocket.send('Connection established');
+    websocket.on("message", function (msg) {
+        console.log("Recieved message:" + msg);
+    });
+});
+setInterval(function () {
+    if (wsServer.clients) {
+        wsServer.clients.forEach(function (client) {
+            client.send("Hello");
+        });
+    }
+}, 2000);
